@@ -16,22 +16,18 @@
 <table>
     <thead>
     <tr>
-        <th>Node ID</th>
-        <th>Display Name</th>
-        <th>Description</th>
         <th>Timestamp</th>
         <th>Sound Level (dB)</th>
-        <th>Source File</th>
+        <th>Student Space</th>
+        <th>Description</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="reading : ${readings}">
-        <td th:text="${reading.nodeId}"></td>
-        <td th:text="${reading.displayName}"></td>
-        <td th:text="${reading.description}"></td>
         <td th:text="${reading.timestamp}"></td>
         <td th:text="${reading.soundLevelDb}"></td>
-        <td th:text="${reading.sourceFileName}"></td>
+        <td th:text="${reading.displayName}"></td>
+        <td th:text="${reading.description}"></td>
     </tr>
     </tbody>
 </table>

@@ -35,13 +35,13 @@ public class ReadingService {
     private ReadingDisplayDto toDto(SoundReading reading) {
         Optional<Node> nodeOpt = nodeRepository.findByNodeId(reading.getNodeId());
 
-        String location = nodeOpt.map(Node::getLocation).orElse("Unknown");
-        String deviceName = nodeOpt.map(Node::getDeviceName).orElse("Unknown");
+        String displayName = nodeOpt.map(Node::getDisplayName).orElse("Unknown");
+        String description = nodeOpt.map(Node::getDescription).orElse("Unknown");
 
         return new ReadingDisplayDto(
                 reading.getNodeId(),
-                location,
-                deviceName,
+                displayName,
+                description,
                 reading.getTimestamp(),
                 reading.getSoundLevelDb(),
                 reading.getSourceFileName()

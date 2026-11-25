@@ -4,6 +4,7 @@ package com.urban_computing.sound_monitor.service;
 import com.urban_computing.sound_monitor.entity.SoundReading;
 import com.urban_computing.sound_monitor.repository.NodeRepository;
 import com.urban_computing.sound_monitor.repository.SoundReadingRepository;
+import jakarta.transaction.Transactional;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +28,7 @@ public class ExcelImportService {
         this.nodeRepository = nodeRepository;
     }
 
+    @Transactional
     public void importFile(MultipartFile file, String nodeId) throws IOException {
         if (nodeRepository.findByNodeId(nodeId).isEmpty()) {
             throw new IllegalArgumentException("Unknown nodeId: " + nodeId);
@@ -65,11 +69,12 @@ public class ExcelImportService {
 
     private LocalDateTime readTimestamp(Cell cell) {
         try {
+            if (cell.getCellType() == CellType.STRING) {
+                DateTimeFormatter fmt = DateTimeFormatter.ofPattern("HH:mm:ss yyyy-MM-dd", Locale.ENGLISH);
+                return LocalDateTime.parse(cell.getStringCellValue().trim(), fmt);
+            }
             if (cell.getCellType() == CellType.NUMERIC && DateUtil.isCellDateFormatted(cell)) {
                 return cell.getLocalDateTimeCellValue();
-            }
-            if (cell.getCellType() == CellType.STRING) {
-                return LocalDateTime.parse(cell.getStringCellValue());
             }
         } catch (Exception ignored) {
         }

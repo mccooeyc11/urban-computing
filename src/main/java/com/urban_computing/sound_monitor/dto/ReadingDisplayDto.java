@@ -4,17 +4,17 @@ import java.time.LocalDateTime;
 
 public class ReadingDisplayDto {
     private String nodeId;
-    private String location;
-    private String deviceName;
+    private String displayName;
+    private String description;
     private LocalDateTime timestamp;
     private Double soundLevelDb;
     private String sourceFileName;
 
-    public ReadingDisplayDto(String nodeId, String location, String deviceName,
+    public ReadingDisplayDto(String nodeId, String displayName, String description,
                              LocalDateTime timestamp, Double soundLevelDb, String sourceFileName) {
         this.nodeId = nodeId;
-        this.location = location;
-        this.deviceName = deviceName;
+        this.displayName = displayName;
+        this.description = description;
         this.timestamp = timestamp;
         this.soundLevelDb = soundLevelDb;
         this.sourceFileName = sourceFileName;
@@ -24,12 +24,12 @@ public class ReadingDisplayDto {
         return nodeId;
     }
 
-    public String getLocation() {
-        return location;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public String getDeviceName() {
-        return deviceName;
+    public String getDescription() {
+        return description;
     }
 
     public LocalDateTime getTimestamp() {
